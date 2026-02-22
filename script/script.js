@@ -1,5 +1,6 @@
 let interviewList= [];
 let rejectedList= [];
+let currentStatus = 'all-btn';
 
 
 
@@ -40,6 +41,8 @@ function toggleStyle (id){
     rejectedBtn.classList.add('bg-gray-200', 'text-black');
 
     const selected = document.getElementById(id);
+    currentStatus = id;
+    currentStatus = id;
     selected.classList.remove('bg-gray-200', 'text-black')
     selected.classList.add('bg-[#3B82F6]', 'text-white')
 
@@ -47,10 +50,20 @@ function toggleStyle (id){
         allCardSection.classList.add('hidden');
         filterSection.classList.remove('hidden');
     }
-    else if (id==="all-btn"){
+    else if(id === 'rejected-btn'){
+        allCardSection.classList.add('hidden');
+        filterSection.classList.remove('hidden');
+        renderRejected()
+    }
+    // else if (id==="all-btn"){
+    //     allCardSection.classList.remove('hidden');
+    //     filterSection.classList.add('hidden');
+    // }
+    else {
         allCardSection.classList.remove('hidden');
         filterSection.classList.add('hidden');
     }
+    
 }
 
 mainContainer.addEventListener('click', function(event){
@@ -78,6 +91,7 @@ mainContainer.addEventListener('click', function(event){
    if (!jobExits ){
     interviewList.push(jobInfo);
    }
+   rejectedList = rejectedList.filter(item => item.jobName != jobInfo.jobName)
    count ();
    renderInterview();
    //console.log(interviewList);
@@ -102,56 +116,79 @@ else if(event.target.classList.contains('rejected-btn')){ // classlist ----> int
  }
  const jobExits = rejectedList.find(item=> item.jobName == jobInfo.jobName );
 
+
    if (!jobExits ){
     rejectedList.push(jobInfo);
    }
+   interviewList = interviewList.filter(item => item.jobName != jobInfo.jobName);
+   
+   if (currentStatus == 'interview-btn'){
+     renderInterview();
+   }
+   
    count ();
-   renderRejected();
+   //renderRejected();
    //console.log(interviewList);
  }
 
 });
 
+
 function renderInterview() {
-  filterSection.innerHTML = '';
-
-  for (let item of interviewList) {
-    let div = document.createElement('div');
-    div.className =
-      'flex justify-between shadow-lg bg-blue-100 rounded-lg p-4 my-4';
-
-    div.innerHTML = `
-      <div>
-        <h1 class="text-blue-900 text-xl font-bold py-4 job-name">${item.jobName}</h1>
-        <p class="text-gray-400 para1">${item.para1}</p>
-        <p class="text-gray-400 para2">${item.para2}</p>
-        <button class="bg-gray-100 text-blue-950 my-4 p-4 rounded-md status">${item.status}</button>
-        <p class="my-4 para3">${item.para3}</p>
-      </div>
-    `;
-
+    filterSection.innerHTML = '';
+for(interview of interviewList){
+   // console.log(interview);
+    let div = document.createElement ('div');
+    div.className =     `flex justify-between shadow-lg bg-blue-100 rounded-lg p-4 my-4`;
+    div.innerHTML =     `
+      <div id="mobile-crop">
+            <div id="crop-heading">
+            <h1 class="text-blue-900 text-xl font-bold py-4  job-name">${interview.jobName}</h1>
+            <p class="text-gray-400 para1">${interview.para1}</p>
+            <p class="text-gray-400 para2">${interview.para2}</p>
+            </div>
+            <div id="not-applied" >
+                <button class="bg-gray-100 text-blue-950 my-4  p-4 rounded-md  status">${interview.status}</button>
+                <p class="my-4 para3">${interview.para3}</p>
+            </div>
+            <div class="job-btn">
+                <button id="interview-btn" class="border-2 bg-green-400 py-2 px-4 text-white" >Interview</button>
+                <button id="rejected-btn" class="border-2 bg-red-400 py-2 px-4 text-white" >Rejected</button>
+            </div>
+        </div>
+         <div id="delete">
+        <button class="bg-red-200 text-red-800 p-2 rounded-md">Delete</button>
+       </div>
+    `
     filterSection.appendChild(div);
-  }
+ }
 }
 function renderRejected() {
-  filterSection.innerHTML = '';
-
-  for (let item of rejectedList) {
-    let div = document.createElement('div');
-    div.className =
-      'flex justify-between shadow-lg bg-blue-100 rounded-lg p-4 my-4';
-
-    div.innerHTML = `
-      <div>
-        <h1 class="text-blue-900 text-xl font-bold py-4 job-name">${item.jobName}</h1>
-        <p class="text-gray-400 para1">${item.para1}</p>
-        <p class="text-gray-400 para2">${item.para2}</p>
-        <button class="bg-gray-100 text-blue-950 my-4 p-4 rounded-md status">${item.status}</button>
-        <p class="my-4 para3">${item.para3}</p>
-      </div>
-    `;
-
+    filterSection.innerHTML = '';
+for(rejected of rejectedList){
+   // console.log(interview);
+    let div = document.createElement ('div');
+    div.className =     `flex justify-between shadow-lg bg-blue-100 rounded-lg p-4 my-4`;
+    div.innerHTML =     `
+      <div id="mobile-crop">
+            <div id="crop-heading">
+            <h1 class="text-blue-900 text-xl font-bold py-4  job-name">${rejected.jobName}</h1>
+            <p class="text-gray-400 para1">${rejected.para1}</p>
+            <p class="text-gray-400 para2">${rejected.para2}</p>
+            </div>
+            <div id="not-applied" >
+                <button class="bg-gray-100 text-blue-950 my-4  p-4 rounded-md  status">${rejected.status}</button>
+                <p class="my-4 para3">${rejected.para3}</p>
+            </div>
+            <div class="job-btn">
+                <button id="interview-btn" class="border-2 bg-green-400 py-2 px-4 text-white" >Interview</button>
+                <button id="rejected-btn" class="border-2 bg-red-400 py-2 px-4 text-white" >Rejected</button>
+            </div>
+        </div>
+         <div id="delete">
+        <button class="bg-red-200 text-red-800 p-2 rounded-md">Delete</button>
+       </div>
+    `
     filterSection.appendChild(div);
-  }
+ }
 }
-
