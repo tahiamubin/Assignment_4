@@ -82,6 +82,33 @@ mainContainer.addEventListener('click', function(event){
    renderInterview();
    //console.log(interviewList);
  }
+  
+else if(event.target.classList.contains('rejected-btn')){ // classlist ----> interview-btn
+    const parentNode =  event.target.parentNode.parentNode;
+ const jobName = parentNode.querySelector('.job-name').innerText;
+ const para1 = parentNode.querySelector('.para1').innerText;
+ const para2 = parentNode.querySelector('.para2').innerText;
+ const status = parentNode.querySelector('.status').innerText;
+ const para3 = parentNode.querySelector('.para3').innerText;
+
+  parentNode.querySelector('.status').innerText = 'Rejected';
+
+ const jobInfo ={
+    jobName, 
+    para1, 
+    para2 , 
+    status: 'Rejected' , 
+    para3
+ }
+ const jobExits = rejectedList.find(item=> item.jobName == jobInfo.jobName );
+
+   if (!jobExits ){
+    rejectedList.push(jobInfo);
+   }
+   count ();
+   renderRejected();
+   //console.log(interviewList);
+ }
 
 });
 
@@ -89,6 +116,27 @@ function renderInterview() {
   filterSection.innerHTML = '';
 
   for (let item of interviewList) {
+    let div = document.createElement('div');
+    div.className =
+      'flex justify-between shadow-lg bg-blue-100 rounded-lg p-4 my-4';
+
+    div.innerHTML = `
+      <div>
+        <h1 class="text-blue-900 text-xl font-bold py-4 job-name">${item.jobName}</h1>
+        <p class="text-gray-400 para1">${item.para1}</p>
+        <p class="text-gray-400 para2">${item.para2}</p>
+        <button class="bg-gray-100 text-blue-950 my-4 p-4 rounded-md status">${item.status}</button>
+        <p class="my-4 para3">${item.para3}</p>
+      </div>
+    `;
+
+    filterSection.appendChild(div);
+  }
+}
+function renderRejected() {
+  filterSection.innerHTML = '';
+
+  for (let item of rejectedList) {
     let div = document.createElement('div');
     div.className =
       'flex justify-between shadow-lg bg-blue-100 rounded-lg p-4 my-4';
