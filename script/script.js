@@ -1,3 +1,4 @@
+
 let interviewList= [];
 let rejectedList= [];
 let currentStatus = 'all-btn';
@@ -130,6 +131,26 @@ else if(event.target.classList.contains('rejected-btn')){ // classlist ----> int
    //renderRejected();
    //console.log(interviewList);
  }
+
+ else if (event.target.classList.contains('delete-btn')) {  // classlist ------> delete-btn
+
+    const card = event.target.closest('.shadow-lg');
+    const jobName = card.querySelector('.job-name').innerText;
+
+    card.remove();
+
+    interviewList = interviewList.filter(item => item.jobName !== jobName);
+    rejectedList = rejectedList.filter(item => item.jobName !== jobName);
+
+    if (currentStatus === 'interview-btn') {
+        renderInterview();
+    } 
+    else if (currentStatus === 'rejected-btn') {
+        renderRejected();
+    }
+
+    count();
+}
 
 });
 
