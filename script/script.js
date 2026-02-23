@@ -183,7 +183,23 @@ for(interview of interviewList){
     `
     filterSection.appendChild(div);
  }
+
+ // no job
+ const noJob = document.getElementById('no-job');
+ if (interviewList.length == 0){
+    noJob.style.display = 'block';
+ }
+ else {
+    noJob.style.display = 'hidden';
+
+ }
+
+ 
 }
+
+
+
+// rejected
 function renderRejected() {
     filterSection.innerHTML = '';
 for(rejected of rejectedList){
