@@ -1,11 +1,15 @@
 1. What is the difference between getElementById, getElementsByClassName, and querySelector / querySelectorAll?
 
  => getElementById: Select specific element by the Selected Id.
+
     getElementsByClassName : Select element under the same class name.
+
     querySelector: It select the first element that matches the selector
+
     querySelectorAll: It select the all element that matches the selector
 
 How do you create and insert a new element into the DOM?
+
  => First create a new element using createELement()
     Add html content 
     select the element you want to insert 
@@ -16,6 +20,7 @@ How do you create and insert a new element into the DOM?
       * it is efficient 
       * it simplifies the code
       * memory usage
+      
 5. What is the difference between preventDefault() and stopPropagation() methods?
   => preventDefault(): Prevent default action from occurring.
   For example : If a user click the submit button on form by default it will submit but if we use preventDefault it will prevent from submitting.
